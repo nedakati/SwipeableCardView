@@ -45,7 +45,8 @@ extension ViewController: CardsDataSource {
     func numberOfCards() -> Int { 10 }
     
     func card(at index: Int) -> UIView {
-        let view = UIView()
+        let view = UILabel()
+        view.text = "\(index)"
         view.backgroundColor = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1.0)
         return view
     }

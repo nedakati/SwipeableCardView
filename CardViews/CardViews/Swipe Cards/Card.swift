@@ -20,12 +20,20 @@ class Card: UIView {
     private var contentView: UIView!
     private var overlay: UIView!
     
+    private var topConstraint: NSLayoutConstraint?
+    private var heightConstraint: NSLayoutConstraint?
+    private var leadingConstraint: NSLayoutConstraint?
+    private var trailingConstraint: NSLayoutConstraint?
+
     weak var delegate: CardDelegate?
     
+    private var initialCenter: CGPoint
+
     // MARK: - Init
     
     init(content: UIView) {
         self.contentView = content
+        self.initialCenter = .zero
         super.init(frame: .zero)
         
         addShadow()
@@ -34,8 +42,51 @@ class Card: UIView {
         addGesture()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        initialCenter = center
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Public methods
+    
+    public func addTopAnchor(related view: UIView, constant: CGFloat) {
+        if let topConstraint = topConstraint {
+            topConstraint.constant = constant
+            return
+        }
+        self.topConstraint = topAnchor.constraint(equalTo: view.topAnchor, constant: constant)
+        NSLayoutConstraint.activate([topConstraint!])
+    }
+    
+    public func addLeadingAnchor(related view: UIView, constant: CGFloat) {
+        if let leadingConstraint = leadingConstraint {
+            leadingConstraint.constant = constant
+            return
+        }
+        self.leadingConstraint = leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: constant)
+        NSLayoutConstraint.activate([leadingConstraint!])
+    }
+    
+    public func addTrailingAnchor(related view: UIView, constant: CGFloat) {
+        if let trailingConstraint = trailingConstraint {
+            trailingConstraint.constant = -constant
+            return
+        }
+        self.trailingConstraint = trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -constant)
+        NSLayoutConstraint.activate([trailingConstraint!])
+    }
+    
+    public func addHeightAnchor(constant: CGFloat) {
+        if let heightConstraint = heightConstraint {
+            heightConstraint.constant = constant
+            return
+        }
+        self.heightConstraint = heightAnchor.constraint(equalToConstant: constant)
+        NSLayoutConstraint.activate([heightConstraint!])
     }
     
     // MARK: - Private methods
@@ -46,8 +97,8 @@ class Card: UIView {
         shadowView.backgroundColor = .clear
         shadowView.layer.shadowColor = UIColor.gray.cgColor
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        shadowView.layer.shadowOpacity = 0.6
-        shadowView.layer.shadowRadius = 20
+        shadowView.layer.shadowOpacity = 0.4
+        shadowView.layer.shadowRadius = 10
         addSubview(shadowView)
            
         NSLayoutConstraint.activate([
@@ -149,6 +200,10 @@ class Card: UIView {
                 }) { _ in
                     self.delegate?.didRemoveCard(self)
                 }
+            } else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    card.center = CGPoint(x: self.initialCenter.x, y: 0)// self.initialCenter
+                })
             }
         default:
             break

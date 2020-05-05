@@ -33,9 +33,7 @@ class CardsContainer: UIView {
     private var cardHeight: CGFloat = 0
     
     private var leftCards = 0
-    
-    private var isRemovingCard = false
-    
+        
     // MARK: - Inits
     
     override init(frame: CGRect) {
@@ -48,17 +46,13 @@ class CardsContainer: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        guard !isRemovingCard else {
-            isRemovingCard.toggle()
-            return
-        }
-        
-        cardHeight = bounds.size.height * 0.7
-        reloadData()
+
+        cardHeight = frame.height * 0.8
+        rearrange()
     }
     
-
+    // MARK: - Public methods
+    
     public func reloadData() {
         removeAll()
         guard let dataSource = dataSource else { return }
@@ -66,25 +60,21 @@ class CardsContainer: UIView {
         
         for index in 0..<min(numberOfCards, maximumVisibleCards) {
             let contentView = dataSource.card(at: index)
-            let card = Card(content: contentView)
-            card.delegate = self
-            cards.append(card)
-            addCard(at: index, view: card)
+            createCard(from: contentView, at: index)
         }
         
         leftCards = numberOfCards - min(numberOfCards, maximumVisibleCards)
+        rearrange()
     }
     
     // MARK: - Private methods
     
-    private func addCard(at index: Int, view: Card) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        insertSubview(view, at: 0)
-            
-        view.topAnchor.constraint(equalTo: topAnchor, constant: CGFloat(index) * padding).isActive = true
-        view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
-        view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
-        view.heightAnchor.constraint(equalToConstant: cardHeight).isActive = true
+    private func createCard(from view: UIView, at index: Int) {
+        let card = Card(content: view)
+        card.delegate = self
+        cards.append(card)
+        card.translatesAutoresizingMaskIntoConstraints = false
+        insertSubview(card, at: 0)
     }
     
     private func removeAll() {
@@ -100,25 +90,30 @@ class CardsContainer: UIView {
 extension CardsContainer: CardDelegate {
 
     func didRemoveCard(_ card: Card) {
-        isRemovingCard = true
-        
+
+        cards.remove(at: 0)
         card.removeFromSuperview()
-     
-        guard let dataSource = dataSource, leftCards != 0 else { return }
+
+        guard let dataSource = dataSource else { return }
         
-        let newIndex = numberOfCards - (numberOfCards - leftCards)
+        if leftCards != 0 {
+            let startIndex = numberOfCards - leftCards
+            
+            let contentView = dataSource.card(at: startIndex)
+            createCard(from: contentView, at: maximumVisibleCards)
+            
+            leftCards -= 1
+        }
         
-        
-//        addCardView(cardView: datasource.card(at: newIndex), atIndex: visibleCards - 1)
-//        for (cardIndex, cardView) in visibleCards.reversed().enumerated() {
-//            UIView.animate(withDuration: 0.2, animations: {
-//            cardView.center = self.center
-//              self.addCardFrame(index: cardIndex, cardView: cardView)
-//                self.layoutIfNeeded()
-//            })
-//        }
-        
-//        isRemovingCard = false
-        
+        rearrange()
+    }
+    
+    private func rearrange() {
+        for index in 0..<cards.count {
+            cards[index].addTopAnchor(related: self, constant: CGFloat(index) * padding)
+            cards[index].addHeightAnchor(constant: cardHeight)
+            cards[index].addLeadingAnchor(related: self, constant: 10)
+            cards[index].addTrailingAnchor(related: self, constant: 10)
+        }
     }
 }
