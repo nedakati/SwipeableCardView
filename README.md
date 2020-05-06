@@ -79,7 +79,7 @@ var delegate: CardsDelegate?
 Reloads all of the items for the cards view.
 
 ```
-  public func reloadData()
+public func reloadData()
 ```
 
 
