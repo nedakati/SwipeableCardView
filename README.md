@@ -1,5 +1,6 @@
 # CardView
 
+<img src="https://user-images.githubusercontent.com/33289471/81226329-5b4fc200-8ff3-11ea-9e2d-4dc453259b74.gif" width="200" height="400" /> 
 
 
 # Usage
