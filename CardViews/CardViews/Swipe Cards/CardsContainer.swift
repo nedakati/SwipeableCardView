@@ -9,25 +9,57 @@
 import UIKit
 
 protocol CardsDataSource {
+    /**
+       Tells the data source to return the number of cards.
+     */
     func numberOfCards() -> Int
+    /**
+        Tells the data source to insert the card in a particular location.
+     */
     func card(at index: Int) -> UIView
+}
+
+protocol CardsDelegate {
+    /**
+     Tells the delegate that the specified card is swiped left.
+     */
+    func didSwipeLeft(at index: Int)
+    /**
+        Tells the delegate that the specified card is swiped right.
+    */
+    func didSwipeRight(at index: Int)
+    /**
+        Tells the delegate that the specified card is selected.
+    */
+    func didSelectCard(at index: Int)
 }
 
 class CardsContainer: UIView {
     
     // MARK: - Properties
     
+    /**
+        The maximum number of cards that should be shown at the same time.
+     */
     var maximumVisibleCards: Int = 4
     
+    /**
+        The object that acts as the data source of the cards view.
+     */
     var dataSource: CardsDataSource? {
         didSet {
             reloadData()
         }
     }
+    /**
+       The object that acts as the delegate of the cards view.
+    */
+    var delegate: CardsDelegate?
     
     // MARK: - Private properties
     
     private var numberOfCards = 0
+    private var visibleCards: [Card] = []
     private var cards: [Card] = []
     private var padding: CGFloat = 10
     private var cardHeight: CGFloat = 0
@@ -41,18 +73,21 @@ class CardsContainer: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        cardHeight = frame.height * 0.8
+        cardHeight = frame.height - CGFloat(maximumVisibleCards * 10)
         rearrange()
     }
     
     // MARK: - Public methods
     
+    /**
+     Reloads all of the data for the cards view.
+     */
     public func reloadData() {
         removeAll()
         guard let dataSource = dataSource else { return }
@@ -72,16 +107,29 @@ class CardsContainer: UIView {
     private func createCard(from view: UIView, at index: Int) {
         let card = Card(content: view)
         card.delegate = self
+        visibleCards.append(card)
         cards.append(card)
         card.translatesAutoresizingMaskIntoConstraints = false
         insertSubview(card, at: 0)
     }
     
     private func removeAll() {
-        for card in cards {
+        for card in visibleCards {
             card.removeFromSuperview()
         }
-        cards = []
+        visibleCards = []
+    }
+    
+    private func rearrange() {
+        for index in 0..<visibleCards.count {
+            if (index == 0) {
+                visibleCards[index].removeOverlay()
+            }
+            visibleCards[index].addTopAnchor(related: self, constant: CGFloat(index) * padding)
+            visibleCards[index].addHeightAnchor(constant: cardHeight)
+            visibleCards[index].addLeadingAnchor(related: self, constant: 10)
+            visibleCards[index].addTrailingAnchor(related: self, constant: 10)
+        }
     }
 }
 
@@ -89,9 +137,9 @@ class CardsContainer: UIView {
 
 extension CardsContainer: CardDelegate {
 
-    func didRemoveCard(_ card: Card) {
+    internal func didRemoveCard(_ card: Card) {
 
-        cards.remove(at: 0)
+        visibleCards.remove(at: 0)
         card.removeFromSuperview()
 
         guard let dataSource = dataSource else { return }
@@ -108,12 +156,18 @@ extension CardsContainer: CardDelegate {
         rearrange()
     }
     
-    private func rearrange() {
-        for index in 0..<cards.count {
-            cards[index].addTopAnchor(related: self, constant: CGFloat(index) * padding)
-            cards[index].addHeightAnchor(constant: cardHeight)
-            cards[index].addLeadingAnchor(related: self, constant: 10)
-            cards[index].addTrailingAnchor(related: self, constant: 10)
-        }
+    internal func didSwipeLeft(_ card: Card) {
+        guard let index = cards.firstIndex(where: { $0 == card}) else { return }
+        delegate?.didSwipeLeft(at: index)
+    }
+    
+    internal func didSwipeRight(_ card: Card) {
+        guard let index = cards.firstIndex(where: { $0 == card}) else { return }
+        delegate?.didSwipeRight(at: index)
+    }
+    
+    internal func didTapOnCard(_ card: Card) {
+        guard let index = cards.firstIndex(where: { $0 == card}) else { return }
+        delegate?.didSelectCard(at: index)
     }
 }

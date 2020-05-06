@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     // MARK: - Properties
     
     var cardView: CardsContainer!
+    var viewModel = ViewModel()
     
     // MARK: - Lifecycle
     
@@ -27,13 +28,23 @@ class ViewController: UIViewController {
         cardView = CardsContainer()
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.dataSource = self
+        cardView.delegate = self
         
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.font = UIFont(name: title.font.fontName, size: 50)
+        title.text = "Explore"
+        
+        view.addSubview(title)
         view.addSubview(cardView)
         NSLayoutConstraint.activate([
-            cardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            title.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            cardView.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 10),
             cardView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             cardView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            cardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            cardView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.8)
         ])
     }
 }
@@ -42,13 +53,28 @@ class ViewController: UIViewController {
 
 extension ViewController: CardsDataSource {
 
-    func numberOfCards() -> Int { 10 }
+    func numberOfCards() -> Int { viewModel.cities.count }
     
     func card(at index: Int) -> UIView {
-        let view = UILabel()
-        view.text = "\(index)"
-        view.backgroundColor = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1.0)
+        let view = CustomView()
+        view.addContent(image: viewModel.cities[index].image, title: viewModel.cities[index].title)
         return view
     }
 }
 
+// MARK: - CardsDelegate
+
+extension ViewController: CardsDelegate {
+
+    func didSwipeLeft(at index: Int) {
+        // TODO: Handle swipe action
+    }
+    
+    func didSwipeRight(at index: Int) {
+        // TODO: Handle swipe action
+    }
+    
+    func didSelectCard(at index: Int) {
+        // TODO: Handle action
+    }
+}

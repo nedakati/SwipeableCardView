@@ -10,6 +10,9 @@ import UIKit
 
 protocol CardDelegate: AnyObject {
     func didRemoveCard(_ card: Card)
+    func didSwipeRight(_ card: Card)
+    func didSwipeLeft(_ card: Card)
+    func didTapOnCard(_ card: Card)
 }
 
 class Card: UIView {
@@ -89,6 +92,10 @@ class Card: UIView {
         NSLayoutConstraint.activate([heightConstraint!])
     }
     
+    public func removeOverlay() {
+        overlay.isHidden = true
+    }
+    
     // MARK: - Private methods
     
     private func addShadow() {
@@ -115,7 +122,6 @@ class Card: UIView {
         overlay.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         overlay.layer.cornerRadius = 10
         overlay.clipsToBounds = true
-        overlay.isHidden = true
         addSubview(overlay)
            
         NSLayoutConstraint.activate([
@@ -142,13 +148,25 @@ class Card: UIView {
     
     private func addGesture() {
         isUserInteractionEnabled = true
-        addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleGesture)))
-        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleTapGesture)))
+        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongTapGesture)))
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapGesture)))
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeLeft.direction = .left
+        addGestureRecognizer(swipeLeft)
+
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeRight.direction = .right
+        addGestureRecognizer(swipeRight)
     }
     
     // MARK: - UI Actions
     
-    @objc private func handleTapGesture(sender: UILongPressGestureRecognizer) {
+    @objc private func handleTapGesture(sender: UITapGestureRecognizer) {
+        delegate?.didTapOnCard(self)
+    }
+    
+    @objc private func handleLongTapGesture(sender: UILongPressGestureRecognizer) {
 
         guard let card = sender.view as? Card else { return }
 
@@ -168,46 +186,29 @@ class Card: UIView {
         }
     }
     
-    @objc private func handleGesture(sender: UIPanGestureRecognizer) {
+    @objc private func handleSwipe(sender: UISwipeGestureRecognizer) {
 
-        let card = sender.view as! Card
-        let point = sender.translation(in: self)
+        guard let card = sender.view as? Card else { return }
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        
-        UIView.animate(withDuration: 0.1) {
-            card.center = CGPoint(x: center.x + point.x, y: center.y + point.y)
-        }
-        
-        switch sender.state {
-        case .began:
-            UIView.animate(withDuration: 0.1) {
-                self.overlay.isHidden = false
+
+        if sender.direction == .right {
+            UIView.animate(withDuration: 0.3, animations: {
+                card.center = CGPoint(x: center.x + 400, y: center.y + 75)
+                card.alpha = 0
+                self.overlay.isHidden = true
+            }) { _ in
+                self.delegate?.didSwipeRight(self)
+                self.delegate?.didRemoveCard(self)
             }
-        case .ended:
-            if card.frame.minX < 0 {
-                UIView.animate(withDuration: 0.3, animations: {
-                    card.center = CGPoint(x: center.x + point.x - 200, y: center.y + point.y + 75)
-                    card.alpha = 0
-                    self.overlay.isHidden = true
-                }) { _ in
-                    self.delegate?.didRemoveCard(self)
-                }
-            } else if card.frame.maxX > superview?.frame.width ?? 0 {
-                UIView.animate(withDuration: 0.3, animations: {
-                    card.center = CGPoint(x: center.x + point.x + 400, y: center.y + point.y + 75)
-                    card.alpha = 0
-                    self.overlay.isHidden = true
-                }) { _ in
-                    self.delegate?.didRemoveCard(self)
-                }
-            } else {
-                UIView.animate(withDuration: 0.3, animations: {
-                    card.center = CGPoint(x: self.initialCenter.x, y: 0)// self.initialCenter
-                })
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                card.center = CGPoint(x: center.x - 200, y: center.y + 75)
+                card.alpha = 0
+                self.overlay.isHidden = true
+            }) { _ in
+                self.delegate?.didSwipeLeft(self)
+                self.delegate?.didRemoveCard(self)
             }
-        default:
-            break
         }
-        
     }
 }
