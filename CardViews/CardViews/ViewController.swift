@@ -77,4 +77,8 @@ extension ViewController: CardsDelegate {
     func didSelectCard(at index: Int) {
         // TODO: Handle action
     }
+    
+    func didRemoveLastCard() {
+        cardView.reloadData()
+    }
 }

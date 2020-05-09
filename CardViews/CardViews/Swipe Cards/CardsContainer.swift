@@ -32,6 +32,10 @@ protocol CardsDelegate {
         Tells the delegate that the specified card is selected.
     */
     func didSelectCard(at index: Int)
+    /**
+        Tells the delegate that the last card was removed from the visible cards.
+     */
+    func didRemoveLastCard()
 }
 
 class CardsContainer: UIView {
@@ -151,6 +155,10 @@ extension CardsContainer: CardDelegate {
             createCard(from: contentView, at: maximumVisibleCards)
             
             leftCards -= 1
+        }
+        
+        if visibleCards.count == 0 {
+            delegate?.didRemoveLastCard()
         }
         
         rearrange()
