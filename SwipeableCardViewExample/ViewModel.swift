@@ -19,10 +19,8 @@ class ViewModel {
     
     init() {
         cities.append(City(image: UIImage(named: "amsterdam"), title: "Amsterdam"))
-        cities.append(City(image: UIImage(named: "barcelona"), title: "Barcelona"))
-        cities.append(City(image: UIImage(named: "mountain"), title: "Austria"))
         cities.append(City(image: UIImage(named: "paris"), title: "Paris"))
-        cities.append(City(image: UIImage(named: "svajc"), title: "Switzerland"))
+        cities.append(City(image: UIImage(named: "switzerland"), title: "Switzerland"))
         cities.append(City(image: UIImage(named: "london"), title: "London"))
     }
     
