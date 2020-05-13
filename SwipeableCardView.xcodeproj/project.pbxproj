@@ -14,6 +14,10 @@
 		A9C8370D246C1AC6007E885E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9C8370B246C1AC6007E885E /* Main.storyboard */; };
 		A9C8370F246C1AC8007E885E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9C8370E246C1AC8007E885E /* Assets.xcassets */; };
 		A9C83712246C1AC8007E885E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9C83710246C1AC8007E885E /* LaunchScreen.storyboard */; };
+		A9C83718246C1C5C007E885E /* SwipeableCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C83717246C1C5C007E885E /* SwipeableCard.swift */; };
+		A9C8371A246C1CA2007E885E /* SwipeableCardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C83719246C1CA2007E885E /* SwipeableCardContainer.swift */; };
+		A9C8371C246C1D03007E885E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C8371B246C1D03007E885E /* ViewModel.swift */; };
+		A9C8371E246C1DFE007E885E /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C8371D246C1DFE007E885E /* CustomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		A9C8370E246C1AC8007E885E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9C83711246C1AC8007E885E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9C83713246C1AC8007E885E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9C83717246C1C5C007E885E /* SwipeableCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCard.swift; sourceTree = "<group>"; };
+		A9C83719246C1CA2007E885E /* SwipeableCardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCardContainer.swift; sourceTree = "<group>"; };
+		A9C8371B246C1D03007E885E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		A9C8371D246C1DFE007E885E /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +79,8 @@
 			children = (
 				A9C836F7246C1A34007E885E /* SwipeableCardView.h */,
 				A9C836F8246C1A34007E885E /* Info.plist */,
+				A9C83717246C1C5C007E885E /* SwipeableCard.swift */,
+				A9C83719246C1CA2007E885E /* SwipeableCardContainer.swift */,
 			);
 			path = SwipeableCardView;
 			sourceTree = "<group>";
@@ -80,11 +90,13 @@
 			children = (
 				A9C83705246C1AC6007E885E /* AppDelegate.swift */,
 				A9C83707246C1AC6007E885E /* SceneDelegate.swift */,
+				A9C8371B246C1D03007E885E /* ViewModel.swift */,
 				A9C83709246C1AC6007E885E /* ViewController.swift */,
 				A9C8370B246C1AC6007E885E /* Main.storyboard */,
 				A9C8370E246C1AC8007E885E /* Assets.xcassets */,
 				A9C83710246C1AC8007E885E /* LaunchScreen.storyboard */,
 				A9C83713246C1AC8007E885E /* Info.plist */,
+				A9C8371D246C1DFE007E885E /* CustomView.swift */,
 			);
 			path = SwipeableCardViewExample;
 			sourceTree = "<group>";
@@ -150,6 +162,7 @@
 				TargetAttributes = {
 					A9C836F3246C1A34007E885E = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
 					};
 					A9C83702246C1AC6007E885E = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -200,6 +213,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C8371A246C1CA2007E885E /* SwipeableCardContainer.swift in Sources */,
+				A9C83718246C1C5C007E885E /* SwipeableCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,8 +222,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9C8371E246C1DFE007E885E /* CustomView.swift in Sources */,
 				A9C8370A246C1AC6007E885E /* ViewController.swift in Sources */,
 				A9C83706246C1AC6007E885E /* AppDelegate.swift in Sources */,
+				A9C8371C246C1D03007E885E /* ViewModel.swift in Sources */,
 				A9C83708246C1AC6007E885E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,6 +375,7 @@
 		A9C836FD246C1A34007E885E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5P26NUF2Q4;
@@ -374,6 +392,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nedakati.SwipeableCardView;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -382,6 +401,7 @@
 		A9C836FE246C1A34007E885E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 5P26NUF2Q4;
