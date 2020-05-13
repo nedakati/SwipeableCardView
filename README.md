@@ -4,8 +4,8 @@ Customizable card views in Swift, with options to swipe left/right.
 
 <img src="https://user-images.githubusercontent.com/33289471/81226329-5b4fc200-8ff3-11ea-9e2d-4dc453259b74.gif" width="200" height="400" /> 
 
-<img src="https://user-images.githubusercontent.com/33289471/81257738-b8239a80-903c-11ea-90b6-27a1f72a1d9e.gif" width="200" height="400" /> 
-
+<!-- <img src="https://user-images.githubusercontent.com/33289471/81257738-b8239a80-903c-11ea-90b6-27a1f72a1d9e.gif" width="200" height="400" /> 
+-->
 
 # Installation
 
