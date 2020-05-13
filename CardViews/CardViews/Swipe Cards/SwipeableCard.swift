@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol CardDelegate: AnyObject {
-    func didRemoveCard(_ card: Card)
-    func didSwipeRight(_ card: Card)
-    func didSwipeLeft(_ card: Card)
-    func didTapOnCard(_ card: Card)
+protocol SwipeableCardDelegate: AnyObject {
+    func didRemoveCard(_ card: SwipeableCard)
+    func didSwipeRight(_ card: SwipeableCard)
+    func didSwipeLeft(_ card: SwipeableCard)
+    func didTapOnCard(_ card: SwipeableCard)
 }
 
-class Card: UIView {
+class SwipeableCard: UIView {
 
     // MARK: - Private properties
     
@@ -28,15 +28,12 @@ class Card: UIView {
     private var leadingConstraint: NSLayoutConstraint?
     private var trailingConstraint: NSLayoutConstraint?
 
-    weak var delegate: CardDelegate?
-    
-    private var initialCenter: CGPoint
+    weak var delegate: SwipeableCardDelegate?
 
     // MARK: - Init
     
     init(content: UIView) {
         self.contentView = content
-        self.initialCenter = .zero
         super.init(frame: .zero)
         
         addShadow()
@@ -44,14 +41,9 @@ class Card: UIView {
         addOverlay()
         addGesture()
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        initialCenter = center
-    }
-    
+
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     // MARK: - Public methods
@@ -168,7 +160,7 @@ class Card: UIView {
     
     @objc private func handleLongTapGesture(sender: UILongPressGestureRecognizer) {
 
-        guard let card = sender.view as? Card else { return }
+        guard let card = sender.view as? SwipeableCard else { return }
 
         switch sender.state {
         case .began:
@@ -188,12 +180,12 @@ class Card: UIView {
     
     @objc private func handleSwipe(sender: UISwipeGestureRecognizer) {
 
-        guard let card = sender.view as? Card else { return }
+        guard let card = sender.view as? SwipeableCard else { return }
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
 
         if sender.direction == .right {
             UIView.animate(withDuration: 0.3, animations: {
-                card.center = CGPoint(x: center.x + 400, y: center.y + 75)
+                card.center = CGPoint(x: center.x + 400, y: center.y + 30)
                 card.alpha = 0
                 self.overlay.isHidden = true
             }) { _ in
@@ -202,7 +194,7 @@ class Card: UIView {
             }
         } else {
             UIView.animate(withDuration: 0.3, animations: {
-                card.center = CGPoint(x: center.x - 200, y: center.y + 75)
+                card.center = CGPoint(x: center.x - 400, y: center.y + 30)
                 card.alpha = 0
                 self.overlay.isHidden = true
             }) { _ in

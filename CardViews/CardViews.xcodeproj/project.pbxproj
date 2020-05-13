@@ -13,8 +13,8 @@
 		A95FE018245F1E8A00730804 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A95FE016245F1E8A00730804 /* Main.storyboard */; };
 		A95FE01A245F1E8F00730804 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95FE019245F1E8F00730804 /* Assets.xcassets */; };
 		A95FE01D245F1E8F00730804 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A95FE01B245F1E8F00730804 /* LaunchScreen.storyboard */; };
-		A95FE026245F20F800730804 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95FE025245F20F800730804 /* Card.swift */; };
-		A95FE028245F211500730804 /* CardsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95FE027245F211500730804 /* CardsContainer.swift */; };
+		A95FE026245F20F800730804 /* SwipeableCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95FE025245F20F800730804 /* SwipeableCard.swift */; };
+		A95FE028245F211500730804 /* SwipeableCardsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95FE027245F211500730804 /* SwipeableCardsContainer.swift */; };
 		A9D4BA64246333AA00645E57 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D4BA63246333A900645E57 /* CustomView.swift */; };
 		A9D4BA662463369900645E57 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D4BA652463369900645E57 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -28,8 +28,8 @@
 		A95FE019245F1E8F00730804 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A95FE01C245F1E8F00730804 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A95FE01E245F1E8F00730804 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A95FE025245F20F800730804 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		A95FE027245F211500730804 /* CardsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsContainer.swift; sourceTree = "<group>"; };
+		A95FE025245F20F800730804 /* SwipeableCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCard.swift; sourceTree = "<group>"; };
+		A95FE027245F211500730804 /* SwipeableCardsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCardsContainer.swift; sourceTree = "<group>"; };
 		A9D4BA63246333A900645E57 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		A9D4BA652463369900645E57 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,8 +81,8 @@
 		A95FE024245F20D300730804 /* Swipe Cards */ = {
 			isa = PBXGroup;
 			children = (
-				A95FE025245F20F800730804 /* Card.swift */,
-				A95FE027245F211500730804 /* CardsContainer.swift */,
+				A95FE025245F20F800730804 /* SwipeableCard.swift */,
+				A95FE027245F211500730804 /* SwipeableCardsContainer.swift */,
 			);
 			path = "Swipe Cards";
 			sourceTree = "<group>";
@@ -166,8 +166,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A95FE028245F211500730804 /* CardsContainer.swift in Sources */,
-				A95FE026245F20F800730804 /* Card.swift in Sources */,
+				A95FE028245F211500730804 /* SwipeableCardsContainer.swift in Sources */,
+				A95FE026245F20F800730804 /* SwipeableCard.swift in Sources */,
 				A95FE015245F1E8A00730804 /* ViewController.swift in Sources */,
 				A9D4BA64246333AA00645E57 /* CustomView.swift in Sources */,
 				A95FE011245F1E8A00730804 /* AppDelegate.swift in Sources */,

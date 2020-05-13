@@ -38,7 +38,7 @@ protocol CardsDelegate {
     func didRemoveLastCard()
 }
 
-class CardsContainer: UIView {
+class SwipeableCardsContainer: UIView {
     
     // MARK: - Properties
     
@@ -63,8 +63,8 @@ class CardsContainer: UIView {
     // MARK: - Private properties
     
     private var numberOfCards = 0
-    private var visibleCards: [Card] = []
-    private var cards: [Card] = []
+    private var visibleCards: [SwipeableCard] = []
+    private var cards: [SwipeableCard] = []
     private var padding: CGFloat = 10
     private var cardHeight: CGFloat = 0
     
@@ -109,7 +109,7 @@ class CardsContainer: UIView {
     // MARK: - Private methods
     
     private func createCard(from view: UIView, at index: Int) {
-        let card = Card(content: view)
+        let card = SwipeableCard(content: view)
         card.delegate = self
         visibleCards.append(card)
         cards.append(card)
@@ -139,9 +139,9 @@ class CardsContainer: UIView {
 
 // MARL: - CardDelegate
 
-extension CardsContainer: CardDelegate {
+extension SwipeableCardsContainer: SwipeableCardDelegate {
 
-    internal func didRemoveCard(_ card: Card) {
+    internal func didRemoveCard(_ card: SwipeableCard) {
 
         visibleCards.remove(at: 0)
         card.removeFromSuperview()
@@ -164,17 +164,17 @@ extension CardsContainer: CardDelegate {
         rearrange()
     }
     
-    internal func didSwipeLeft(_ card: Card) {
+    internal func didSwipeLeft(_ card: SwipeableCard) {
         guard let index = cards.firstIndex(where: { $0 == card}) else { return }
         delegate?.didSwipeLeft(at: index)
     }
     
-    internal func didSwipeRight(_ card: Card) {
+    internal func didSwipeRight(_ card: SwipeableCard) {
         guard let index = cards.firstIndex(where: { $0 == card}) else { return }
         delegate?.didSwipeRight(at: index)
     }
     
-    internal func didTapOnCard(_ card: Card) {
+    internal func didTapOnCard(_ card: SwipeableCard) {
         guard let index = cards.firstIndex(where: { $0 == card}) else { return }
         delegate?.didSelectCard(at: index)
     }

@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     // MARK: - Properties
     
-    var cardView: CardsContainer!
+    var cardView: SwipeableCardsContainer!
     var viewModel = ViewModel()
     
     // MARK: - Lifecycle
@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     // MARK: - Private properties
     
     private func addViews() {
-        cardView = CardsContainer()
+        cardView = SwipeableCardsContainer()
         cardView.translatesAutoresizingMaskIntoConstraints = false
         cardView.dataSource = self
         cardView.delegate = self
