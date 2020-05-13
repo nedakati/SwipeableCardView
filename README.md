@@ -7,6 +7,15 @@ Customizable card views in Swift, with options to swipe left/right.
 <img src="https://user-images.githubusercontent.com/33289471/81257738-b8239a80-903c-11ea-90b6-27a1f72a1d9e.gif" width="200" height="400" /> 
 
 
+# Installation
+
+SwipeableCardView is available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'SwipeableCardView'
+```
+
 # Usage 🔨
 
 Add `CardsContainer` to your view controller and set `delegate` and `dataSource` for it.
@@ -91,4 +100,14 @@ Reloads all of the items for the cards view.
 public func reloadData()
 ```
 
+## Example
 
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+## Author
+
+Neda Katalin
+
+## License
+
+SwipeableCardView is available under the MIT license. See the LICENSE file for more info.

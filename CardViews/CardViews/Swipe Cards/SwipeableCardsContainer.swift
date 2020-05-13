@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol CardsDataSource {
+public protocol CardsDataSource {
     /**
        Tells the data source to return the number of cards.
      */
@@ -19,7 +19,7 @@ protocol CardsDataSource {
     func card(at index: Int) -> UIView
 }
 
-protocol CardsDelegate {
+public protocol CardsDelegate {
     /**
      Tells the delegate that the specified card is swiped left.
      */
@@ -38,19 +38,19 @@ protocol CardsDelegate {
     func didRemoveLastCard()
 }
 
-class SwipeableCardsContainer: UIView {
+public class SwipeableCardsContainer: UIView {
     
     // MARK: - Properties
     
     /**
         The maximum number of cards that should be shown at the same time.
      */
-    var maximumVisibleCards: Int = 4
+    public var maximumVisibleCards: Int = 4
     
     /**
         The object that acts as the data source of the cards view.
      */
-    var dataSource: CardsDataSource? {
+    public var dataSource: CardsDataSource? {
         didSet {
             reloadData()
         }
@@ -58,7 +58,7 @@ class SwipeableCardsContainer: UIView {
     /**
        The object that acts as the delegate of the cards view.
     */
-    var delegate: CardsDelegate?
+    public var delegate: CardsDelegate?
     
     // MARK: - Private properties
     
@@ -80,7 +80,7 @@ class SwipeableCardsContainer: UIView {
         super.init(coder: coder)
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
 
         cardHeight = frame.height - CGFloat(maximumVisibleCards * 10)
@@ -141,7 +141,7 @@ class SwipeableCardsContainer: UIView {
 
 extension SwipeableCardsContainer: SwipeableCardDelegate {
 
-    internal func didRemoveCard(_ card: SwipeableCard) {
+    public func didRemoveCard(_ card: SwipeableCard) {
 
         visibleCards.remove(at: 0)
         card.removeFromSuperview()
@@ -164,17 +164,17 @@ extension SwipeableCardsContainer: SwipeableCardDelegate {
         rearrange()
     }
     
-    internal func didSwipeLeft(_ card: SwipeableCard) {
+    public func didSwipeLeft(_ card: SwipeableCard) {
         guard let index = cards.firstIndex(where: { $0 == card}) else { return }
         delegate?.didSwipeLeft(at: index)
     }
     
-    internal func didSwipeRight(_ card: SwipeableCard) {
+    public func didSwipeRight(_ card: SwipeableCard) {
         guard let index = cards.firstIndex(where: { $0 == card}) else { return }
         delegate?.didSwipeRight(at: index)
     }
     
-    internal func didTapOnCard(_ card: SwipeableCard) {
+    public func didTapOnCard(_ card: SwipeableCard) {
         guard let index = cards.firstIndex(where: { $0 == card}) else { return }
         delegate?.didSelectCard(at: index)
     }

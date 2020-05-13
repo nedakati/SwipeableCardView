@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol SwipeableCardDelegate: AnyObject {
+public protocol SwipeableCardDelegate: AnyObject {
     func didRemoveCard(_ card: SwipeableCard)
     func didSwipeRight(_ card: SwipeableCard)
     func didSwipeLeft(_ card: SwipeableCard)
     func didTapOnCard(_ card: SwipeableCard)
 }
 
-class SwipeableCard: UIView {
+public class SwipeableCard: UIView {
 
     // MARK: - Private properties
     
