@@ -1,4 +1,4 @@
-# CardView 
+# SwipeableCardView 
 
 Customizable card views in Swift, with options to swipe left/right.
 
